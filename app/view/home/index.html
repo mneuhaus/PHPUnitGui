@@ -32,14 +32,6 @@
             <span class="icon-bar"></span>
           </a>
           <a class="brand" href="./">VisualPHPUnit</a>
-          <div class="nav-collapse">
-            <ul class="nav">
-              <li class='active'><a href="./">Home</a></li>
-              <li><a href="./archives">Archives</a></li>
-              <li><a href="./graphs">Graphs</a></li>
-              <li><a href="./help">Help</a></li>
-            </ul>
-          </div>
         </div>
       </div>
     </div>
@@ -106,117 +98,11 @@
                       }
 
                     ?>
-                    <li>
-                      <i class="icon-folder-close"></i>
-                      <label>This Folder is Closed By Default</label>
-                      <ul>
-                        <li><i class="icon-folder-close"></i><label>Ooops! A Nested Folder</label>
-                          <ul>
-                            <li><i class="icon-folder-close"></i><label>Look Ma - No Hands!</label>
-                              <ul>
-                                <li><i class="icon-file"></i>First Nested Item</li>
-                                <li><i class="icon-file"></i>Second Nested Item</li>
-                                <li><i class="icon-file"></i>Third Nested Item</li>
-                                <li><i class="icon-file"></i>Fourth Nested Item</li>
-                              </ul>
-                            </li>
-                            <li><i class="icon-file"></i>Item 1</li>
-                            <li><i class="icon-file"></i>Item 2</li>
-                            <li><i class="icon-file"></i>Item 3</li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                    <li>
-                      <i class="icon-folder-close"></i>
-                      <label>This Folder is Closed By Default</label>
-                      <ul>
-                        <li><label>Ooops! A Nested Folder</label>
-                          <ul>
-                            <li><label>Look Ma - No Hands!</label>
-                              <ul>
-                                <li><a href="./">First Nested Item</a></li>
-                                <li><a href="./">Second Nested Item</a></li>
-                                <li><a href="./">Third Nested Item</a></li>
-                                <li><a href="./">Fourth Nested Item</a></li>
-                              </ul>
-                            </li>
-                            <li><a href="./">Item 1</a></li>
-                            <li><a href="./">Item 2</a></li>
-                            <li><a href="./">Item 3</a></li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
                   </ul>
                 </div>
               </li>
-
-              <li>
-                <p class='help-block'>
-                  Tips: You can select multiple files by single-clicking them.
-                  You can also use shift+click to select a range of files, or
-                  ctrl+click to select an entire directory.
-                </p>
-              </li>
-
+<!-- 
               <li class='divider'></li>
-
-              <li class='centered'>
-                <input type='hidden' name='test_files' id='test-files' />
-                <button type="submit" id='run-tests' class="btn btn-primary">Run Tests</button>
-              </li>
-
-              <li class='divider'></li>
-
-              <li class='nav-header'>Options</li>
-              <li>
-                <label for='store_statistics' class='options-description'>
-                  <i class='icon-pencil'></i>
-                  Store Statistics
-                </label>
-                <select id='store_statistics' name='store_statistics' class='test-options'>
-                  <option value='0'>No</option>
-                  <option value='1' <?php if ( $store_statistics ) echo "selected='selected'"; ?>>Yes</option>
-                </select>
-              </li>
-              <li>
-                <label for='create_snapshots' class='options-description'>
-                  <i class='icon-camera'></i>
-                  Create Snapshots
-                </label>
-                <select id='create_snapshots' name='create_snapshots' class='test-options'>
-                  <option value='0'>No</option>
-                  <option value='1' <?php if ( $create_snapshots ) echo "selected='selected'"; ?>>Yes</option>
-                </select>
-              </li>
-              <li>
-                <label for='sandbox_errors' class='options-description'>
-                  <i class='icon-exclamation-sign'></i>
-                  Sandbox Errors
-                </label>
-                <select id='sandbox_errors' name='sandbox_errors' class='test-options'>
-                  <option value='0'>No</option>
-                  <option value='1' <?php if ( $sandbox_errors ) echo "selected='selected'"; ?>>Yes</option>
-                </select>
-              </li>
-
-              <li>
-                <label for='use_xml' class='options-description'>
-                  <i class='icon-wrench'></i>
-                  Use XML Config
-                </label>
-                <select id='use_xml' name='use_xml' class='test-options'>
-                  <option value='0'>No</option>
-                  <option value='1' <?php if ( $use_xml ) echo "selected='selected'"; ?>>Yes</option>
-                </select>
-                <p class='help-block'>
-                  Note that setting this to "Yes" will cause VPU to ignore the tests selected above and use the tests specified in the XML file instead.
-                </p>
-              </li>
-
-              <li class='divider'></li>
-
 
               <li class='nav-header'>Display</li>
               <li>
@@ -253,6 +139,13 @@
                   <input type='checkbox' id='display-succeeded' class='display-suite' value='1' checked='checked' data-target='succeeded' />
                   <abbr title='Succeeded'>Su</abbr>
                 </label>
+              </li> -->
+
+              <li class='divider'></li>
+
+              <li class='centered'>
+                <input type='hidden' name='test_files' id='test-files' />
+                <button type="submit" id='run-tests' class="btn btn-primary">Run Tests</button>
               </li>
 
             </ul>
