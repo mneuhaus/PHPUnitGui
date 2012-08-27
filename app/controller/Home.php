@@ -39,6 +39,25 @@ class Home extends \app\core\Controller {
 
     // GET/POST
     public function index($request) {
+        if(isset($_REQUEST['configuration'])){
+            $configurations = \app\lib\Library::retrieve('configurations');
+            $configurationFile = $configurations[$_REQUEST["configuration"]];
+            
+            $flow3Root = realpath(dirname(__FILE__) . "/../../../../../");
+
+            $configuration = new \SimpleXMLElement(file_get_contents($configurationFile));
+            foreach ($configuration->testsuites->testsuite as $testsuite) {
+                $testDirectories = glob($flow3Root . "/" . $testsuite->directory);
+            }
+            $configuationDir = dirname($configurationFile);
+            $bootstrap = realpath($configuationDir . '/' . strval($configuration->attributes()->bootstrap));
+            $config = \app\lib\Library::retrieve();
+            $config['test_directory'] = current($testDirectories);
+            $config['test_directories'] = $testDirectories;
+            \app\lib\Library::store($config);
+            require_once($bootstrap);
+        }
+
         if ( $request->is('get') ) {
             $test_directory = str_replace(
                 '\\', '/', realpath(\app\lib\Library::retrieve('test_directory'))
@@ -49,6 +68,8 @@ class Home extends \app\core\Controller {
             $create_snapshots = \app\lib\Library::retrieve('create_snapshots');
             $sandbox_errors = \app\lib\Library::retrieve('sandbox_errors');
             $use_xml = \app\lib\Library::retrieve('xml_configuration_file');
+            $configurations = \app\lib\Library::retrieve('configurations');
+            $test_directories = \app\lib\Library::retrieve('test_directories');
             return compact(
                 'create_snapshots',
                 'sandbox_errors',
@@ -56,7 +77,9 @@ class Home extends \app\core\Controller {
                 'store_statistics',
                 'suites',
                 'test_directory',
-                'use_xml'
+                'use_xml',
+                'configurations',
+                'test_directories'
             );
         }
 
@@ -64,13 +87,14 @@ class Home extends \app\core\Controller {
         $vpu = new \app\lib\VPU();
 
         if ( $request->data['sandbox_errors'] ) {
-            error_reporting(\app\lib\Library::retrieve('error_reporting'));
-            set_error_handler(array($vpu, 'handle_errors'));
+#            error_reporting(\app\lib\Library::retrieve('error_reporting'));
+#            set_error_handler(array($vpu, 'handle_errors'));
         }
 
         $xml_config = false;
 
         $notifications = array();
+
         if ( $request->data['use_xml'] ) {
             $xml_config = \app\lib\Library::retrieve('xml_configuration_file');
             if ( !$xml_config || !$xml_config = realpath($xml_config) ) {
@@ -91,7 +115,7 @@ class Home extends \app\core\Controller {
         $results = $vpu->compile_suites($results, 'web');
 
         if ( $request->data['sandbox_errors'] ) {
-            restore_error_handler();
+            #restore_error_handler();
         }
 
         $suites = $results['suites'];

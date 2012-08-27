@@ -1,7 +1,7 @@
 <?php
 
 $root = dirname(dirname(__DIR__));
-
+$flow3Root = realpath($root . "/../../../../../../");
 $config = array(
     /* Required */
 
@@ -9,7 +9,7 @@ $config = array(
     'pear_path'      => '/usr/share/pear',
 
     // The directory where the tests reside
-    'test_directory' => "{$root}/app/test",
+    'test_directory' => "",
 
 
     /* Optional */
@@ -66,7 +66,12 @@ $config = array(
 
     // Paths to any necessary bootstraps
     'bootstraps' => array(
-        // '/path/to/bootstrap.php'
+        #$root . '/../Build/Common/PhpUnit/FunctionalTestBootstrap.php'
+    ),
+
+    'configurations' => array(
+        'FunctionalTests' => "{$flow3Root}/Build/Common/PhpUnit/FunctionalTests.xml",
+        'UnitTests' => "{$flow3Root}/Build/Common/PhpUnit/UnitTests.xml",
     )
 );
 

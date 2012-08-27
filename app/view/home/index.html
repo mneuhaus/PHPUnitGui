@@ -7,6 +7,7 @@
     <meta name="description" content="">
 
     <link href="./css/bootstrap.css" rel="stylesheet">
+    <link href="./css/main.css" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -50,10 +51,105 @@
         <div class='span3'>
           <form action='./' method='post' class='well'>
             <ul class="nav nav-list">
+              <li>
+                <label for='configuration' class='options-description'>
+                  <i class='icon-wrench'></i>
+                  Configuration File
+                </label>
+                <select id='configuration' name='configuration'>
+                  <option value='0'>None</option>
+                  <?php foreach($configurations as $configurationName => $configuration): ?>
+                  <option value='<?php echo $configurationName; ?>'<?php echo isset($_REQUEST["configuration"]) && $_REQUEST["configuration"] == $configurationName ? "selected='selected'" : '' ?>>
+                    <?php echo $configurationName; ?>
+                  </option>
+                  <?php endforeach; ?>
+                </select>
+              </li>
+
               <li class='nav-header'>Files</li>
 
               <li>
-                <div class='file-selector'></div>
+                <div class="treeview">
+                  <ul data-treeview="true">
+                    <?php
+                      function directoryTree ($directory, $filter = ".+Test.php") {
+                        $files = scandir($directory);
+                        $outputFolders = '';
+                        $outputFiles = '';
+                        foreach ($files as $node) {
+                          if(substr($node, 0, 1) == ".") continue;
+                          $path = realpath($directory . "/" . $node);
+                          if (is_dir($path)){
+                            $outputFolders.= '<li data-path="'.$path.'" data-type="directory">
+                                <i class="icon-folder-close"></i><label>' . $node . '</label>' . directoryTree($path) . 
+                              '</li>';
+                          } else {
+                            if(!preg_match("/".$filter."/", $node)) continue;
+                            $outputFiles.= '<li data-path="'.$path.'" data-type="file"><i class="icon-file"></i><label>' . $node . '</label></li>';
+                          }
+                        }
+                        
+                        if(strlen($outputFiles . $outputFolders) > 0)
+                          return "<ul>" . $outputFolders . $outputFiles . "</ul>";
+
+                        return '';
+                      }
+
+                      foreach($test_directories as $directory){
+                        preg_match("/Packages\/.+\/(.+)\/Tests\//", $directory, $match);
+                        $package = $match[1];
+                        $directory = realpath($directory);
+                        echo '<li data-path="' . $directory . '">
+                          <i class="icon-folder-close"></i><label>' . $package . '</label>
+                          '.directoryTree($directory).'
+                        </li>';
+                      }
+
+                    ?>
+                    <li>
+                      <i class="icon-folder-close"></i>
+                      <label>This Folder is Closed By Default</label>
+                      <ul>
+                        <li><i class="icon-folder-close"></i><label>Ooops! A Nested Folder</label>
+                          <ul>
+                            <li><i class="icon-folder-close"></i><label>Look Ma - No Hands!</label>
+                              <ul>
+                                <li><i class="icon-file"></i>First Nested Item</li>
+                                <li><i class="icon-file"></i>Second Nested Item</li>
+                                <li><i class="icon-file"></i>Third Nested Item</li>
+                                <li><i class="icon-file"></i>Fourth Nested Item</li>
+                              </ul>
+                            </li>
+                            <li><i class="icon-file"></i>Item 1</li>
+                            <li><i class="icon-file"></i>Item 2</li>
+                            <li><i class="icon-file"></i>Item 3</li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <i class="icon-folder-close"></i>
+                      <label>This Folder is Closed By Default</label>
+                      <ul>
+                        <li><label>Ooops! A Nested Folder</label>
+                          <ul>
+                            <li><label>Look Ma - No Hands!</label>
+                              <ul>
+                                <li><a href="./">First Nested Item</a></li>
+                                <li><a href="./">Second Nested Item</a></li>
+                                <li><a href="./">Third Nested Item</a></li>
+                                <li><a href="./">Fourth Nested Item</a></li>
+                              </ul>
+                            </li>
+                            <li><a href="./">Item 1</a></li>
+                            <li><a href="./">Item 2</a></li>
+                            <li><a href="./">Item 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
               </li>
 
               <li>
@@ -62,6 +158,13 @@
                   You can also use shift+click to select a range of files, or
                   ctrl+click to select an entire directory.
                 </p>
+              </li>
+
+              <li class='divider'></li>
+
+              <li class='centered'>
+                <input type='hidden' name='test_files' id='test-files' />
+                <button type="submit" id='run-tests' class="btn btn-primary">Run Tests</button>
               </li>
 
               <li class='divider'></li>
@@ -97,6 +200,7 @@
                   <option value='1' <?php if ( $sandbox_errors ) echo "selected='selected'"; ?>>Yes</option>
                 </select>
               </li>
+
               <li>
                 <label for='use_xml' class='options-description'>
                   <i class='icon-wrench'></i>
@@ -151,13 +255,6 @@
                 </label>
               </li>
 
-              <li class='divider'></li>
-
-              <li class='centered'>
-                <input type='hidden' name='test_files' id='test-files' />
-                <button type="submit" id='run-tests' class="btn btn-primary">Run Tests</button>
-              </li>
-
             </ul>
           </form>
         </div>
@@ -171,7 +268,8 @@
     <script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js'></script>
     <script src='./js/jqueryFileSelector.js'></script>
     <script src='./js/jquery.sortElements.js'></script>
-    <script src='./js/bootstrap-alert.js'></script>
+    <script src='./js/bootstrap.min.js'></script>
+    <script src='./js/jquery.treeview.js'></script>
 
     <script type='text/html' id='test-results'>
       <% _.each(notifications, function(notification) { %>
@@ -182,6 +280,7 @@
         </div>
       <% }) %>
 
+
       <% _.each(suites, function(suite) { %>
         <div class='suite' data-suite-status='<%= suite.status %>' data-suite-time='<%= suite.time %>'>
           <% var statusCap = suite.status.charAt(0).toUpperCase() + suite.status.slice(1); %>
@@ -190,34 +289,35 @@
             <span class="label label-<%= suite.status %>"><%= statusCap %></span>
           </div>
 
-          <% _.each(suite.tests, function(test) { %>
-            <div class="alert alert-block alert-<%= test.status %>">
-              <h4 class="alert-heading"><%= test.name %></h4>
-              <% if ( test.message) { %>
-              <p class='test-message'>
-                <strong><%= test.message %></strong>
-              </p>
-              <% } %>
-              <ul class='nav'>
-                <li class='test-details'>
-                  <em>Execution time:</em>
-                  <%= test.time %>s
-                </li>
-                <% if ( test.output ) { %>
-                <li class='test-details'>
-                  <em>Debug Output:</em>
-                  <pre><%= test.output %></pre>
-                </li>
-                <% } %>
-                <% if ( test.trace ) { %>
-                <li class='test-details'>
-                  <em>Stack Trace:</em>
-                  <pre><%= test.trace %></pre>
-                </li>
-                <% } %>
-              </ul>
-            </div>
-          <% }) %>
+          <table class="table table-bordered table-condensed">
+            <% _.each(suite.tests, function(test) { %>
+              <tr class="<%= test.status %>">
+                <td>
+                  <b><%= test.name %></b>
+                  <% if ( test.message) { %>
+                  <p class='test-message'>
+                    <i><%= test.message %></i>
+                  </p>
+                  <% } %>
+                  <ul class='nav'>
+                    <% if ( test.output ) { %>
+                    <li class='test-details'>
+                      <em>Debug Output:</em>
+                      <pre><%= test.output %></pre>
+                    </li>
+                    <% } %>
+                    <% if ( test.trace ) { %>
+                    <li class='test-details'>
+                      <em>Stack Trace:</em>
+                      <pre><%= test.trace %></pre>
+                    </li>
+                    <% } %>
+                  </ul>
+                </td>
+                <!--<td><%= test.time %>s</td>-->
+              </tr>
+            <% }) %>
+          </table>
         </div>
 
       <% }) %>
@@ -313,7 +413,7 @@
               "<div class='loader'><img src='./img/ajax-loader.gif'></div>"
             ).fadeIn(300);
 
-            $.post($form.attr('action'), $form.serialize(), function(response) {
+            $.post($form.attr('action'), $form.serialize() + '&run=true', function(response) {
               var template = $("#test-results").html();
 
               try {
@@ -397,8 +497,15 @@
             $('#test-files').val(tests.slice(0, -1));
           },
           root: '<?=$test_directory;?>',
+          roots: <?php echo json_encode($test_directories); ?>,
           serverEndpoint: './file-list'
         });
+
+        $('#configuration').change(function(){
+          var e = $(this);
+          var base = document.location.origin + document.location.pathname;
+          document.location = base + '?configuration=' + e.val();
+        })
       });
     </script>
 
