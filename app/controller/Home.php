@@ -39,6 +39,8 @@ class Home extends \app\core\Controller {
 
     // GET/POST
     public function index($request) {
+        $testDirectories = array();
+        $config = \app\lib\Library::retrieve();
         if(isset($_REQUEST['configuration'])){
             $configurations = \app\lib\Library::retrieve('configurations');
             $configurationFile = $configurations[$_REQUEST["configuration"]];
@@ -51,12 +53,11 @@ class Home extends \app\core\Controller {
             }
             $configuationDir = dirname($configurationFile);
             $bootstrap = realpath($configuationDir . '/' . strval($configuration->attributes()->bootstrap));
-            $config = \app\lib\Library::retrieve();
             $config['test_directory'] = current($testDirectories);
-            $config['test_directories'] = $testDirectories;
-            \app\lib\Library::store($config);
             require_once($bootstrap);
         }
+        $config['test_directories'] = $testDirectories;
+        \app\lib\Library::store($config);
 
         if ( $request->is('get') ) {
             $test_directory = str_replace(

@@ -101,10 +101,61 @@
                   </ul>
                 </div>
               </li>
-<!-- 
+
               <li class='divider'></li>
 
-              <li class='nav-header'>Display</li>
+              <li class='centered'>
+                <input type='hidden' name='test_files' id='test-files' />
+                <button type="submit" id='run-tests' class="btn btn-primary">Run Tests</button>
+              </li>
+
+              <li class='nav-header' style="height:0;overflow:hidden;">Options</li>
+              <li style="height:0;overflow:hidden;">
+                <label for='store_statistics' class='options-description'>
+                  <i class='icon-pencil'></i>
+                  Store Statistics
+                </label>
+                <select id='store_statistics' name='store_statistics' class='test-options'>
+                  <option value='0'>No</option>
+                  <option value='1' <?php if ( $store_statistics ) echo "selected='selected'"; ?>>Yes</option>
+                </select>
+              </li>
+              <li style="height:0;overflow:hidden;">
+                <label for='create_snapshots' class='options-description'>
+                  <i class='icon-camera'></i>
+                  Create Snapshots
+                </label>
+                <select id='create_snapshots' name='create_snapshots' class='test-options'>
+                  <option value='0'>No</option>
+                  <option value='1' <?php if ( $create_snapshots ) echo "selected='selected'"; ?>>Yes</option>
+                </select>
+              </li>
+              <li style="height:0;overflow:hidden;">
+                <label for='sandbox_errors' class='options-description'>
+                  <i class='icon-exclamation-sign'></i>
+                  Sandbox Errors
+                </label>
+                <select id='sandbox_errors' name='sandbox_errors' class='test-options'>
+                  <option value='0'>No</option>
+                  <option value='1' <?php if ( $sandbox_errors ) echo "selected='selected'"; ?>>Yes</option>
+                </select>
+              </li>
+
+              <li style="height:0;overflow:hidden;">
+                <label for='use_xml' class='options-description'>
+                  <i class='icon-wrench'></i>
+                  Use XML Config
+                </label>
+                <select id='use_xml' name='use_xml' class='test-options'>
+                  <option value='0'>No</option>
+                  <option value='1' <?php if ( $use_xml ) echo "selected='selected'"; ?>>Yes</option>
+                </select>
+                <p class='help-block'>
+                  Note that setting this to "Yes" will cause VPU to ignore the tests selected above and use the tests specified in the XML file instead.
+                </p>
+              </li>
+
+<!--               <li class='nav-header'>Display</li>
               <li>
                 <label for='sort' class='display-description'>
                   <i class='icon-tasks'></i>
@@ -140,13 +191,6 @@
                   <abbr title='Succeeded'>Su</abbr>
                 </label>
               </li> -->
-
-              <li class='divider'></li>
-
-              <li class='centered'>
-                <input type='hidden' name='test_files' id='test-files' />
-                <button type="submit" id='run-tests' class="btn btn-primary">Run Tests</button>
-              </li>
 
             </ul>
           </form>
@@ -319,7 +363,7 @@
                   notifications: [{
                     type: 'failed',
                     title: 'Error Parsing Response From Server',
-                    message: response
+                    message:  "<pre>" + response + "</pre>"
                   }]
                 };
               }

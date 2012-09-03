@@ -1,0 +1,159 @@
+.succeeded {
+  color: #468847;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.failed {
+  color: #b94a48;
+  background-color: #f2dede;
+  border-color: #eed3d7;
+}
+
+.incomplete {
+  color: #c09853;
+  background-color: #fcf8e3;
+  border-color: #fbeed5;
+}
+
+.skipped {
+  color: #3a87ad;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+.file-selector {
+  height: 200px;
+  overflow: scroll;
+  margin-bottom: 9px;
+  background: white;
+  border: 1px solid #999;
+}
+
+.file-selector ul {
+  list-style: none;
+}
+
+.file-selector .nav-list > li > a {
+  padding: 0px 15px;
+}
+
+.file-selector .nav-list {
+  padding: 5px 10px;
+}
+
+.directory,
+.file {
+  width: 125%;
+}
+
+.loader {
+  text-align: center;
+  margin-top: 20%;
+}
+
+.test-options {
+  display: inline-block;
+  margin-left: 10px;
+  width: 80px;
+}
+
+.options-description {
+  display: inline-block;
+  width: 140px;
+}
+
+.display-description {
+  display: inline-block;
+  width: 80px;
+}
+
+.test-display {
+  display: inline-block;
+  width: 150px;
+}
+
+label.checkbox {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.centered {
+  text-align: center;
+}
+
+.notification-message,
+.test-message,
+.error-message {
+  margin-top: 10px;
+}
+
+.suite-status {
+  margin-bottom: 10px;
+}
+
+.test-details,
+.error-details {
+  margin-top: 5px;
+}
+
+.statistics {
+  margin-bottom: 20px;
+}
+
+.nav-list {
+  padding: 0;
+}
+
+.suite table ul.nav {
+  margin-bottom: 0;
+}
+
+.treeview {
+  height: 300px;
+  overflow: scroll;
+  margin-bottom: 9px;
+  background: white;
+  border: 1px solid #999;
+  padding-top: 5px;
+}
+
+.treeview ul,
+ul.treeview,
+.treeview li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.treeview li {
+  clear: both;
+  white-space: nowrap;
+}
+
+.treeview li i {
+  float: left;
+}
+
+.treeview li label {
+  margin-bottom: 0;
+}
+
+.treeview li ul{
+  display: none;
+}
+
+.treeview li.selected {
+  background: #08C;
+  color: white;
+}
+
+.treeview li i{ margin-left: 5px; }
+.treeview li li i{ margin-left: 20px; }
+.treeview li li li i{ margin-left: 35px; }
+.treeview li li li li i{ margin-left: 50px; }
+.treeview li li li li li i{ margin-left: 65px; }
+
+.alert-block > div {
+  position: static !important;
+}
